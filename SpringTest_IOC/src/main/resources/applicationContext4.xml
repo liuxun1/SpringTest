@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--<bean class="com.spring.service.MyBeanPostProcessor"></bean>-->
+    <context:component-scan base-package="com.spring.service"></context:component-scan>
+
+    <bean id="dept" class="com.spring.model.Dept" init-method="initMethod" destroy-method="destoryMethod">
+        <property name="name" value="信息部"></property>
+        <property name="emp">
+            <bean id="emp" class="com.spring.model.Emp">
+                <property name="name" value="搞事部"></property>
+                <property name="bookList2">
+                    <list>
+                        <bean class="com.spring.model.Book">
+                            <property name="name" value="JVM"></property>
+                            <property name="author" value="张三"></property>
+                        </bean>
+                        <bean class="com.spring.model.Book">
+                            <property name="name" value="JAVA"></property>
+                            <property name="author" value="李四"></property>
+                        </bean>
+                    </list>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <!--<bean id="emp" class="com.spring.model.Emp"></bean>-->
+
+    <!--<bean id="book" class="com.spring.model.Book"></bean>-->
+
+</beans>
