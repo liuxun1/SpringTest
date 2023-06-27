@@ -12,9 +12,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * @author lx
+ * 测试 XML方式实现 IOC & DI
  * @date 2023-06-26
  */
-public class TestMain {
+public class TestMain1 {
 
     @Test
     public static void main(String[] args) {
