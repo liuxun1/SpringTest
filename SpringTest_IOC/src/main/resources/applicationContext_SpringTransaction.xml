@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <context:component-scan base-package="com.spring"/>
+
+    <bean id="asp" class="com.spring.aspect.Aspect3Config"></bean>
+
+    <aop:config>
+        <aop:pointcut id="pointcut" expression="execution(* com.spring.service.*.*(..))"/>
+        <aop:aspect ref="asp">
+            <aop:before method="methodBefore" pointcut-ref="pointcut"></aop:before>
+            <aop:after method="methodAfter" pointcut-ref="pointcut"></aop:after>
+            <aop:around method="methodAround" pointcut-ref="pointcut"></aop:around>
+            <aop:after-throwing method="methodAfterThrow" pointcut-ref="pointcut" throwing="ex"></aop:after-throwing>
+            <aop:after-returning method="methodAfterReturn" pointcut-ref="pointcut"
+                                 returning="ret"></aop:after-returning>
+        </aop:aspect>
+    </aop:config>
+
+    <aop:aspectj-autoproxy/>
+
+    <context:property-placeholder location="jdbc.properties"/>
+    <!--Druid 连接池-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="username" value="${jdbc_username}"/>
+        <property name="password" value="${jdbc_password}"/>
+        <property name="url" value="${jdbc_url}"/>
+        <property name="driverClassName" value="${jdbc_driverClassName}"/>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <!-- <constructor-arg name="dataSource" ref="dataSource" />-->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+
+    <!--声明事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--全xml形式声明事务-->
+    <!--事务增强1.1-->
+    <!--<tx:advice id="adviceManager">
+        <tx:attributes>
+            <tx:method name="transMoney" isolation="DEFAULT" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>-->
+
+    <!--配置AOP 事务1.2-->
+    <!--<aop:config>
+        &lt;!&ndash;配置切点&ndash;&gt;
+        <aop:pointcut id="pt" expression="execution(* com.spring.service.impl.StudentServiceImpl.transMoney(..))"/>
+
+        &lt;!&ndash;配置切面&ndash;&gt;
+        <aop:advisor advice-ref="adviceManager" pointcut-ref="pt"/>
+    </aop:config>
+-->
+
+    <!--开启事务  半注解配置-->
+    <!--<tx:annotation-driven/>-->
+
+</beans>

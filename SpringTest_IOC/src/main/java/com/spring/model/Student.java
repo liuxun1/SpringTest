@@ -13,7 +13,7 @@ import java.util.Date;
  */
 //@Service("student1") //不设置bean名称  默认的话是类名首字母小写
 //@Service
-@Component
+//@Component
 public class Student {
 
     //@Value("张三")

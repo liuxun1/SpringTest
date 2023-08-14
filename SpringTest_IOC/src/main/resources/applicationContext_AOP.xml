@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+ 
+    <context:component-scan base-package="com.spring"/>
+
+    <bean id="asp" class="com.spring.aspect.Aspect3Config"></bean>
+    
+    <aop:config>
+        <aop:pointcut id="pointcut" expression="execution(* com.spring.service.*.*(..))"/>
+        <aop:aspect ref="asp">
+            <aop:before method="methodBefore" pointcut-ref="pointcut"></aop:before>
+            <aop:after method="methodAfter" pointcut-ref="pointcut"></aop:after>
+            <aop:around method="methodAround" pointcut-ref="pointcut"></aop:around>
+            <aop:after-throwing method="methodAfterThrow" pointcut-ref="pointcut" throwing="ex"></aop:after-throwing>
+            <aop:after-returning method="methodAfterReturn" pointcut-ref="pointcut" returning="ret"></aop:after-returning>
+        </aop:aspect>
+    </aop:config>
+
+    <aop:aspectj-autoproxy/>
+    
+    
+</beans>

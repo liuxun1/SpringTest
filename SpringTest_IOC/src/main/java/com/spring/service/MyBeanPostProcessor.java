@@ -7,10 +7,12 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Service;
 
 /**
+ *
+ * 实现对属性初始化前后赋值操作
  * @author lx
  * @date 2023-06-26
  */
-@Service
+//@Service
 public class MyBeanPostProcessor implements BeanPostProcessor {
 
     @Override
